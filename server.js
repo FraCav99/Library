@@ -13,7 +13,6 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 
-
 // Create Schema for Books
 const BookSchema = new mongoose.Schema({
     title: {
@@ -28,7 +27,10 @@ const BookSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'pages number missing']
     },
-    user: String
+    user: {
+        type: String,
+        default: "anonymous"
+    }
 });
 
 // Create Books model
@@ -41,9 +43,30 @@ const book1 = new Book({
     user: 'nick123'
 });
 
-app.get('/', (req, res) => {
-    res.render('index');
+const book2 = new Book({
+    title: 'book2',
+    author: 'Anna Letcher',
+    pages: 323
 });
+
+//book2.save();
+
+app.get('/', (req, res) => {
+
+    Book.find({}, (err, foundBooks) => {
+        if (err) console.log(err);
+        res.render('index', {foundBooks: foundBooks});
+    });
+});
+
+app.route('/add')
+    .get((req, res) => {
+        res.render('add');
+    })
+    .post((req, res) => {
+        // retrieve inserted data
+        // const title = req.body.
+    });
 
 const PORT = process.env.PORT || 3000;
 

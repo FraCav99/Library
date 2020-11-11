@@ -5,6 +5,7 @@
 }
 
 body {
+  font-family: "Noto Sans JP", sans-serif;
   background-color: rgb(75, 75, 75);
 }
 
@@ -13,4 +14,132 @@ body {
   color: white;
   text-align: center;
   padding: 20px 0px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.header .contribute {
+  font-weight: 500;
+}
+
+.header .contribute button {
+  font-weight: bold;
+  background-color: rgb(0, 119, 255);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid white;
+}
+
+.header .contribute button:hover {
+  background-color: rgb(0, 60, 129);
+}
+
+.header .contribute svg {
+  fill: white;
+}
+
+.header .contribute svg:hover {
+  fill: rgb(0, 60, 129);
+}
+
+.chart__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(23, 82, 82);
+}
+
+.chart__header .label {
+  color: white;
+  width: 25%;
+  text-align: center;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  padding: 10px 0px;
+}
+
+.chart__header .label:first-child {
+  border-left: none;
+}
+
+.chart__header .label:last-child {
+  border-right: none;
+}
+
+.book__record {
+  color: rgb(223, 223, 223);
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  border-bottom: 1px solid white;
+}
+
+.book__record .label {
+  width: 25%;
+  text-align: center;
+  padding: 10px 0px;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  overflow-wrap: break-word;
+}
+
+.book__record .label:last-child {
+  border-right: none;
+  display: flex;
+  align-items: center;
+  padding: 0px;
+}
+
+.book__record .label:last-child .username {
+  width: 80%;
+}
+
+.book__record .label:last-child .delete__btn__container {
+  height: 100%;
+  width: 20%;
+}
+
+.book__record .label:first-child {
+  border-left: none;
+}
+
+.book__record .upload__by button {
+  border: none;
+  background-color: red;
+  font-weight: bold;
+  fill: white;
+  cursor: pointer;
+  padding: 5px;
+  height: 100%;
+  width: 100%;
+}
+
+.book__record .upload__by button:hover {
+  background-color: rgb(145, 0, 0);
+}
+
+/* Media query */
+@media screen and (max-width: 700px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .header .hero {
+    margin-bottom: 30px;
+  }
+
+  .book__record .label:last-child {
+    flex-direction: column;
+  }
+
+  .book__record .label:last-child .delete__btn__container {
+    width: 100%;
+  }
+
+  .book__record .label:last-child .username {
+    width: 100%;
+  }
 }
