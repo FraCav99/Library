@@ -2,7 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/LibraryDB', {
-    useNewUrlParser: true, useUnifiedTopology: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
 });
 
 const app = express();
@@ -36,21 +38,6 @@ const BookSchema = new mongoose.Schema({
 // Create Books model
 const Book = mongoose.model('Book', BookSchema);
 
-const book1 = new Book({
-    title: 'book1',
-    author: 'Joe Doe',
-    pages: 342,
-    user: 'nick123'
-});
-
-const book2 = new Book({
-    title: 'book2',
-    author: 'Anna Letcher',
-    pages: 323
-});
-
-//book2.save();
-
 app.get('/', (req, res) => {
 
     Book.find({}, (err, foundBooks) => {
@@ -61,12 +48,42 @@ app.get('/', (req, res) => {
 
 app.route('/add')
     .get((req, res) => {
-        res.render('add');
+        res.render('add')
     })
     .post((req, res) => {
         // retrieve inserted data
-        // const title = req.body.
+        const title = req.body.title;
+        const author = req.body.author;
+        const pages = req.body.pages;
+        const user = req.body.user;
+
+        // Create a new record to insert into the DB
+        const newBook = new Book({
+            title,
+            author,
+            pages,
+            user: user || 'anonymous'
+        });
+
+        // save the new document
+        newBook.save();
+
+        // redirect to the homepage
+        res.redirect('/');
+
     });
+
+app.post('/delete', (req, res) => {
+    // Retrieve id of the record
+    const deletedBookId = req.body.delete;
+
+    // Using mongoose method to delete it
+    Book.findByIdAndRemove(deletedBookId, err => {
+        if (err) console.log(err);
+        
+        res.redirect('/');
+    });
+});
 
 const PORT = process.env.PORT || 3000;
 
