@@ -1,7 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/LibraryDB', {
+const sanitize = require('mongo-sanitize');
+mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
@@ -52,10 +54,10 @@ app.route('/add')
     })
     .post((req, res) => {
         // retrieve inserted data
-        const title = req.body.title;
-        const author = req.body.author;
-        const pages = req.body.pages;
-        const user = req.body.user;
+        const title = sanitize(req.body.title);
+        const author = sanitize(req.body.author);
+        const pages = sanitize(req.body.pages);
+        const user = sanitize(req.body.user);
 
         // Create a new record to insert into the DB
         const newBook = new Book({
